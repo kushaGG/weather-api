@@ -5,8 +5,8 @@ export interface HourlyUnits {
 }
 
 export interface Hourly {
-	time: any[]
-	temperature_2m: any[]
+	time: string[]
+	temperature_2m: number[]
 	weathercode: number[]
 }
 

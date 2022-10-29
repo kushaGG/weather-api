@@ -11,16 +11,17 @@ datasource db {
 }
 
 model City {
-  id      Int       @id @default(autoincrement())
-  title   String
-  lat     Float
-  lon     Float
-  Weather Weather[]
+  id       Int       @id @default(autoincrement())
+  title    String
+  lat      Float
+  lon      Float
+  Weather  Weather[]
+  requests Int?      @default(0)
 }
 
 model Weather {
-  id          Int    @id @default(autoincrement())
-  city        City   @relation(fields: [cityId], references: [id])
+  id          Int      @id @default(autoincrement())
+  city        City     @relation(fields: [cityId], references: [id])
   cityId      Int
   time        DateTime
   temperature Float

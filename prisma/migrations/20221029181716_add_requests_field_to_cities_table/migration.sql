@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `City` ADD COLUMN `requests` INTEGER NULL DEFAULT 0;
