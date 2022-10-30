@@ -26,4 +26,6 @@ model Weather {
   time        DateTime
   temperature Float
   weather     String
+
+  @@unique([time, cityId])
 }

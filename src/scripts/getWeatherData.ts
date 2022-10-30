@@ -41,12 +41,28 @@ const getWeatherData = async () => {
 		cities.map(async (city) => {
 			const weather = await WeatherAPI.getLastWeather(city.lat, city.lon)
 
-			const data = weather.hourly.time.map((time, index) => ({
+			const weatherApi = weather.hourly.time.map((time, index) => ({
 				cityId: city.id,
 				time: new Date(time),
 				temperature: weather.hourly.temperature_2m[index],
 				weather: WeatherCodeMap.get(weather.hourly.weathercode[index]),
 			}))
+
+			const weatherEntities = await prisma.weather.findMany({
+				where: {
+					cityId: {
+						equals: city.id,
+					},
+				},
+			})
+
+			const data = weatherApi.filter(
+				({ time, cityId }) =>
+					!weatherEntities.some(
+						({ time: time2, cityId: cityId2 }) =>
+							time.toString() === time2.toString() && cityId === cityId2,
+					),
+			)
 
 			const { count } = await prisma.weather.createMany({ data })
 
